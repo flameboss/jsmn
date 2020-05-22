@@ -30,6 +30,10 @@
 extern "C" {
 #endif
 
+#ifndef JSMN_FUNC_ATTR
+#define JSMN_FUNC_ATTR
+#endif
+
 #ifdef JSMN_STATIC
 #define JSMN_API static
 #else
@@ -103,7 +107,7 @@ JSMN_API int jsmn_parse(jsmn_parser *parser, const char *js, const size_t len,
 /**
  * Allocates a fresh unused token from the token pool.
  */
-static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser, jsmntok_t *tokens,
+static jsmntok_t * JSMN_FUNC_ATTR jsmn_alloc_token(jsmn_parser *parser, jsmntok_t *tokens,
                                    const size_t num_tokens) {
   jsmntok_t *tok;
   if (parser->toknext >= num_tokens) {
@@ -121,7 +125,7 @@ static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser, jsmntok_t *tokens,
 /**
  * Fills token type and boundaries.
  */
-static void jsmn_fill_token(jsmntok_t *token, const jsmntype_t type,
+static void JSMN_FUNC_ATTR jsmn_fill_token(jsmntok_t *token, const jsmntype_t type,
                             const int start, const int end) {
   token->type = type;
   token->start = start;
@@ -132,7 +136,7 @@ static void jsmn_fill_token(jsmntok_t *token, const jsmntype_t type,
 /**
  * Fills next available token with JSON primitive.
  */
-static int jsmn_parse_primitive(jsmn_parser *parser, const char *js,
+static int JSMN_FUNC_ATTR jsmn_parse_primitive(jsmn_parser *parser, const char *js,
                                 const size_t len, jsmntok_t *tokens,
                                 const size_t num_tokens) {
   jsmntok_t *token;
@@ -190,7 +194,7 @@ found:
 /**
  * Fills next token with JSON string.
  */
-static int jsmn_parse_string(jsmn_parser *parser, const char *js,
+static int JSMN_FUNC_ATTR jsmn_parse_string(jsmn_parser *parser, const char *js,
                              const size_t len, jsmntok_t *tokens,
                              const size_t num_tokens) {
   jsmntok_t *token;
@@ -265,7 +269,7 @@ static int jsmn_parse_string(jsmn_parser *parser, const char *js,
 /**
  * Parse JSON string and fill tokens.
  */
-JSMN_API int jsmn_parse(jsmn_parser *parser, const char *js, const size_t len,
+JSMN_API int JSMN_FUNC_ATTR jsmn_parse(jsmn_parser *parser, const char *js, const size_t len,
                         jsmntok_t *tokens, const unsigned int num_tokens) {
   int r;
   int i;
@@ -456,7 +460,7 @@ JSMN_API int jsmn_parse(jsmn_parser *parser, const char *js, const size_t len,
  * Creates a new parser based over a given buffer with an array of tokens
  * available.
  */
-JSMN_API void jsmn_init(jsmn_parser *parser) {
+JSMN_API void JSMN_FUNC_ATTR jsmn_init(jsmn_parser *parser) {
   parser->pos = 0;
   parser->toknext = 0;
   parser->toksuper = -1;
